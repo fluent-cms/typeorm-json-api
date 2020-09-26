@@ -1,0 +1,38 @@
+{
+  "name": "merge-record",
+  "version": "0.0.3",
+  "description": "merge/synchronize two data set",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rimraf dist && tsc"
+  },
+  "keywords": [
+    "merge",
+    "record",
+    "batch",
+    "import"
+  ],
+  "homepage": "https://github.com/jaikechen/merge-record",
+  "bugs": {
+    "url": "https://github.com/jaikechen/merge-record/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jaikechen/merge-record.git"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "author": "jaike chen",
+  "license": "MIT",
+  "dependencies": {
+    "deep-equal": "^2.0.3"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "typescript": "^3.8.3"
+  }
+
+}
