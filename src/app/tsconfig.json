@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
-    "lib": ["es5", "es6", "dom"],
-    "target": "es5",
+    "lib": [
+      "es5",
+      "es6",
+      "dom"
+    ],
+    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
@@ -10,6 +14,14 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+   
+  },
+   "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules",
+      ".vscode"
+    ]
 }

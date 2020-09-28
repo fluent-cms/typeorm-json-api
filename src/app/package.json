@@ -2,13 +2,44 @@
   "name": "app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node -r ts-node/register ./src/server.ts",
+    "start:debug": "node --inspect=5858 -r ts-node/register ./src/server.ts",
+    "start:watch": "nodemon",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^14.11.2",
+    "eslint": "^7.9.0",
+    "eslint-plugin-import": "^2.22.0",
+    "nodemon": "^2.0.4",
+    "ts-node": "^9.0.0",
     "typescript": "^4.0.3"
+  },
+  "dependencies": {
+    "@types/axios": "^0.14.0",
+    "axios": "^0.20.0",
+    "express": "^4.17.1",
+    "reflect-metadata": "^0.1.13",
+    "sqlite": "^4.0.14",
+    "sqlite3": "^5.0.0",
+    "typeorm": "^0.2.26"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "npm start",
+    "ext": "ts"
   }
 }
