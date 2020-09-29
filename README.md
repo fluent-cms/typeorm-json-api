@@ -1,69 +1,66 @@
 # why this lib
-It helps synchronizing external data to your local database. 
-# usage
-```typescript
-export const mergeRecord = async <T>(
-  src: T[], 
-  target: T[],
-  keyFields: (keyof T)[] | (keyof T),
-  valueFields: (keyof T)[] | (keyof T) = undefined,
-  insertFunc: (p: T) => void = undefined,
-  updateFunc: (p: T) => void = undefined,
-  deleteFunc: (p: T) => void = undefined
- )
-```
-
-- return value: it return an array of 3 array: array of item need to add, array of item need to update, array of item need to  delete
+This is a generic crud router, with several lines of code, you get crud json web api for all your type orm entities
 ``` typescript
-return [toAdd, toUpdate, toDelete]
+import { repoRouter, setOrmConfig } from "typeorm-json-api";
+const app = express()
+app.use('/api/repos', repoRouter)
 ```
-- src: array of T; a array of items form source data source, e.g. json web api, e.g. database.
-- target: array of T; a array of items  from your local database
-- keyFields: the primary key, e.g. ID. Or one or several field can uniquely identify a record.
-- valueFields: if you know which fields are subjected to change, e.g. price. you can specify these fields to make the comparing more efficient. otherwise you
-can leave it undefined, then the function uses deep compare to test if a record is change.
-- insertFunc, if you pass a callback function, the callback is called for each item in toAdd<br/>
-in the callback function, you could update your local database
-```typescript
- if (insertFunc) {
-    for (const p of toAdd) {
-      await insertFunc(p)
-    }
-  }
+
+suppose you have entity user, then you have the following webapi
+- get /api/repos/user 
+- get /api/repos/user/:id
+- post /api/repos/user
+- put /api/repos/user/:id
+- delete /api/repos/user/:id
+
+# useage
+## if you are starting a new project, you can clone https://github.com/jaikechen/typeorm-json-api/tree/master/src/app as an starter.
+
+## if you want add this lib to an exists project
+### install the type orm and express
+``` s
+npm i express  @types/express --save
 ```
-- updateFunc and deleteFunc, similar with add Func 
+### install type orm
+``` s
+npm i typeorm sqlite reflect-metadata --save
+```
+- typeorm is the typeorm package itself
+- sqlite is the underlying database driver. If you are using a different database system, you must install the appropriate package
+- reflect-metadata is required to make decorators to work properly
 
-
-#example
+### add your typeorm configuration, ormconfig.ts
 ```typescript
-class Car {
-    constructor (public id:number, 
-        public name:string,
-        public color:string ){
-    }
+ export const ormConfig = {
+  "type": "sqlite",
+  "database": "db.sqlite",
+  "entities": [
+    "src/entities/*.ts"
+  ],
+  "logging": false,
+  "synchronize": true
 }
-
-const src = [
-    new Car(1, 'Car1', 'red'),
-    new Car(2, 'Car2', 'light yellow'),
-    new Car(3, 'Car3', 'green'),
-]
-
-let target = [
-    new Car(1, 'Car1', 'red'),
-    new Car(2, 'Car2', 'yellow'),
-    new Car(4, 'Car4', 'green'),
-]
-
-mergeRecord(src,target,'id',['name','color'],
-    x => target.push(x), 
-    x => {
-        target = target.filter(t=>t.id !== x.id)
-        target.push({...x})
-   },
-    x => {target = target.filter(t=>t.id !==x.id)}
-    ).then(result => {
-        console.log(result)
-        console.log(target)
-    })
 ```
+### add entities to /src/entities, e.g. user.ts
+```
+import {Entity, Column, PrimaryGeneratedColumn} from "typeorm";
+
+@Entity()
+export class User {
+    @PrimaryGeneratedColumn()
+    id: number;
+    @Column()
+    firstName: string;
+    @Column()
+    lastName: string;
+}
+```
+
+### add router
+
+``` typescript
+setOrmConfig(ormConfig)
+const app = express()
+app.use('/api/repos', repoRouter)
+```
+

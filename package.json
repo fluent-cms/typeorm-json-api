@@ -1,24 +1,25 @@
 {
-  "name": "merge-record",
+  "name": "typeorm-json-api",
   "version": "0.0.3",
-  "description": "merge/synchronize two data set",
+  "description": "a generic router for type orm entity CRUD",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf dist && tsc"
   },
   "keywords": [
-    "merge",
-    "record",
-    "batch",
-    "import"
+    "typeorm",
+    "express",
+    "crud",
+    "json",
+    "webapi"
   ],
-  "homepage": "https://github.com/jaikechen/merge-record",
+  "homepage": "https://github.com/jaikechen/typerom-json-api",
   "bugs": {
-    "url": "https://github.com/jaikechen/merge-record/issues"
+    "url": "https://github.com/jaikechen/typeorm-json-api/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jaikechen/merge-record.git"
+    "url": "https://github.com/jaikechen/typeorm-json-api.git"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,9 +30,9 @@
   "license": "MIT",
   "dependencies": {
     "@types/express": "^4.17.8",
-    "deep-equal": "^2.0.3",
     "reflect-metadata": "^0.1.13",
-    "sqlite": "^4.0.14"
+    "sqlite": "^4.0.14",
+    "typeorm": "^0.2.26"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",

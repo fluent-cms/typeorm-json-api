@@ -1,9 +1,9 @@
-import { Request, Response, Express } from "express";
+import { Request, Response } from "express";
 import express from "express";
-import { Connection, createConnection } from "typeorm";
+import { Connection, ConnectionOptions, createConnection  } from "typeorm";
 
-let repoOrmConfig: any
-export const setOrmConfig = config => repoOrmConfig = config
+let repoOrmConfig: ConnectionOptions
+export const setOrmConfig = (config:any) => repoOrmConfig = config
 
 let repoConn: Connection
 async function getConnection (){
@@ -49,7 +49,7 @@ repoRouter.put("/:repo/:id", async function(req: Request, res: Response) {
     const id = req.params.id
     const user = await repo.findOne(id);
     repo.merge(user, req.body);
-    const results = await repo.save(user);
+    const results = await repo.save(user as any);
     return res.send(results);
 });
 

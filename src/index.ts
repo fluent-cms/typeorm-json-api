@@ -1,1 +1,1 @@
-export * from './app/src/mergeRecord'
+export {setOrmConfig,repoRouter} from './app/src/routers/repoCrud'

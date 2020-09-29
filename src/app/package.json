@@ -2,16 +2,16 @@
   "name": "app",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node -r ts-node/register ./src/server.ts",
-    "start:debug": "node --inspect=5858 -r ts-node/register ./src/server.ts",
+    "start": "node -r ts-node/register ./src/main.ts",
+    "start:debug": "node --inspect=5858 -r ts-node/register ./src/main.ts",
     "start:watch": "nodemon",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Jaike Chen",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^14.11.2",
     "eslint": "^7.9.0",
