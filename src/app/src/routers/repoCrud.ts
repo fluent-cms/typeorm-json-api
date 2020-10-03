@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import express from "express";
 import { Connection, ConnectionOptions, createConnection  } from "typeorm";
+import { parseQueryParam } from "./queryPrarms";
+import { mylog } from "../utilities/mylogger";
+
 
 let repoOrmConfig: ConnectionOptions
 export const setOrmConfig = (config:any) => repoOrmConfig = config
@@ -10,6 +13,8 @@ async function getConnection (){
     repoConn = repoConn ?? await createConnection(repoOrmConfig)
     return repoConn
 }
+
+
 
 async function getRepo (req:Request){
     const conn = await getConnection()
@@ -22,9 +27,11 @@ export const repoRouter = express.Router()
 repoRouter.use(express.json())
 
 repoRouter.get('/:repo', async (req, res) => {
+    const findOption = parseQueryParam(req.query)
+    mylog(findOption)
     const repo =await getRepo(req)
-    const items = await repo.find()
-    res.json(items)
+    const result = await repo.findAndCount(findOption)
+    res.json(result)
 })
 
 repoRouter.get('/:repo/:id', async (req:Request, res:Response) => {

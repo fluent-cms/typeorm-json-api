@@ -2,7 +2,7 @@ import express from "express";
 import { Request, Response, Express } from "express";
 import { Connection, createConnection } from "typeorm";
 import axios from "axios"
-import { User } from "src/entities/user";
+import { User } from "entities/user";
 
 const testRouter = express.Router()
 function getUrl (url:string) {

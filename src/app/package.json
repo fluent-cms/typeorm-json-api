@@ -27,7 +27,8 @@
     "reflect-metadata": "^0.1.13",
     "sqlite": "^4.0.14",
     "sqlite3": "^5.0.0",
-    "typeorm": "^0.2.26"
+    "typeorm": "^0.2.26",
+    "typeorm-json-api": "0.0.3"
   },
   "nodemonConfig": {
     "ignore": [
