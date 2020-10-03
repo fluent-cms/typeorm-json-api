@@ -1,9 +1,10 @@
 import express from "express";
+import { mylog } from "./utilities/mylogger";
 import { ormConfig } from "./config/ormconfig";
-import { repoRouter, setOrmConfig } from "./routers/repoCrud";
+import { repoRouter, setCRUDRouter } from "./routers/repoCrud";
 //import { repoRouter, setOrmConfig } from "typeorm-json-api";
 import { testRouter } from "./routers/repoCrudTester";
-setOrmConfig(ormConfig)
+setCRUDRouter(ormConfig, mylog)
 const app = express()
 app.use('/api/repos', repoRouter)
 app.use('/test/repos', testRouter)
