@@ -9,35 +9,38 @@ This is a generic CRUD(create, read, update, delete)  router, with several lines
 - modify a record: put /api/repos/yourEntity/:id
 - del a records: /api/repos/yourEntity/:id
 ```
-query records api supports
+
+with query parameters, the get api supports
 - pagignation
 - filter on each field 
 - order on each field
 
-# usage
+# query parameters usage
 suppose you have a repo/entity/model user as following:
 ```typescript
 {id:number, firstName:number, lastName:number}
-
-## /api/repos/user
-
 ```
-- get all user<br/>
-api/repos/user , without any query parameter
-- get all user order by id desc<br/>
-api/repos/user?id=d
-- get the users order by id asc, skip 3, take 2 <br/>
-api/repos/user?id=a&s=3&c=2
-- find users firstName contains Joe<br/>
-api/repos/user?firstName=*Joe
-- find users firstName exact match Joe<br/>
-api/repos/user?firstName=Joe
-- fidnd user id range from 2 to 4<br/>
-api/repos/user?id=2~4
-- fidnd user id >2 <br/>
-api/repos/user?id=2~
-- fidnd user id >4 <br/>
-api/repos/user?id=~4
+## get /api/repos/user
+if the client request the api without parameter, the api will return all users
+## get  api/repos/user?s=3&c=2 
+- s how many records should skip
+- c how many records should return 
+- so this example skips the first 3 records, takes 2 records: 
+## get api/repos/user?firstName=a
+- the key firstName means field name
+- a and d are two reserved value, a means order by user asc, d means order by user desc
+- so this example return all users, order by firstName asc
+## api/repos/user?firstName=*Joe
+- query the users whose firstName contains 'Joe'
+## api/repos/user?firstName=Joe
+- query the users whose firstName exactly match 'Joe'
+## api/repos/user?id=2~4
+- find user id range from 2 to 4<br/>
+## api/repos/user?id=2~
+- find user id >= 2 <br/>
+## api/repos/user?id=~4
+- find user id <= 4
+
 # installation
 ## if you are starting a new project, you can clone https://github.com/jaikechen/typeorm-json-api/tree/master/src/app as an starter.
 ## if you want add this lib to an exists project

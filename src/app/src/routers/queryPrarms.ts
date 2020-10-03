@@ -29,6 +29,8 @@ export function parseQueryParam(params: any) {
             } else {
                 if (val.startsWith('%') || val.endsWith('%')) {
                     where[k] = Like(`${val}`)
+                }else if(val.startsWith('*')){
+                    where[k] = Like(`%${val.substr(1)}%`)
                 } else {
                     where[k] = val
                 }
