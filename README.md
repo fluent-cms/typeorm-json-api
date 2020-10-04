@@ -27,18 +27,29 @@ if the client request the api without parameter, the api will return all users
 - so this example skips the first 3 records, takes 2 records: 
 ## get api/repos/user?firstName=a
 - the key firstName means field name
-- a and d are two reserved value, a means order by user asc, d means order by user desc
+- 'a' and 'd' are two reserved values, 'a' means order by user asc, 'd' means order by user desc
 - so this example return all users, order by firstName asc
 ## api/repos/user?firstName=*Joe
-- query the users whose firstName contains 'Joe'
+- query the users whose firstName contains 'Joe', 
+```sql
+firstName like '%Joe%'
+```
 ## api/repos/user?firstName=Joe
 - query the users whose firstName exactly match 'Joe'
+```sql
+firstName = 'Joe'
+```
 ## api/repos/user?id=2~4
 - find user id range from 2 to 4<br/>
+```sql
+fristName between (2,4)
+```
 ## api/repos/user?id=2~
 - find user id >= 2 <br/>
+
 ## api/repos/user?id=~4
 - find user id <= 4
+
 
 # installation
 ## if you are starting a new project, you can clone https://github.com/jaikechen/typeorm-json-api/tree/master/src/app as an starter.
