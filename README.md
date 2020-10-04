@@ -52,13 +52,13 @@ fristName between (2,4)
 
 # log
 the second parameter of setCRUDRouter is a callback function to log CRUD request
-# default log
+## default log
 setCRUDRouter(ormConfig)
 
-# disable log
+## disable log
 setCRUDRouter(ormConfig,null)
 
-# customze log
+## customze log
 setCRUDRouter(ormConfig,(level,msg)=>{/* your own log code*/ })
 
 
