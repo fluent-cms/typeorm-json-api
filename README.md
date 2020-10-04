@@ -1,7 +1,6 @@
 # why this lib
-this lib dependes on Node.js, express, typeorm<br/>
-This is a generic CRUD(create, read, update, delete)  router, with several lines of code, you get CRUD json web api for all your type orm entities.
-
+Levaraging Express and TypeOrm, this lib helps you add a generic CRUD(create, read, update, delete) router to you Node.js appliation.
+With several lines of code, you get CRUD json web api for all your type orm entities.
 ``` typescript
 - query records: get /api/repos/yourEntity 
 - query by id: get /api/repos/yourEntity/:id
