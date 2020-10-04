@@ -1,1 +1,1 @@
-export {setCRUDRouter,repoRouter} from './app/src/routers/repoCrud'
+export {createCRUDRouter,LogLevel} from './app/src/routers/crudRouter'

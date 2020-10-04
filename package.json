@@ -1,6 +1,6 @@
 {
   "name": "typeorm-json-api",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "a generic router for type orm entity CRUD",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -1,16 +1,17 @@
 # why this lib
-Levaraging Express and TypeOrm, this lib helps you add a generic CRUD(create, read, update, delete) router to you Node.js appliation.
-With several lines of code, you get CRUD json web api for all your type orm entities.
+Leveraging Express and TypeOrm, this lib helps you add a generic CRUD(create, read, update, delete) router to you Node.js application.
+With several lines of code, you get CRUD json web api for all your type orm entities.<br/> You can also add  authorization handler to secure the CRUD router.
+
 ``` typescript
 - query records: get /api/repos/yourEntity 
 - query by id: get /api/repos/yourEntity/:id
 - add a records: post /api/repos/yourEntity
 - modify a record: put /api/repos/yourEntity/:id
-- del a records: /api/repos/yourEntity/:id
+- delete a records: /api/repos/yourEntity/:id
 ```
 
 with query parameters, the get api supports
-- pagignation
+- pagination
 - filter on each field 
 - order on each field
 
@@ -22,8 +23,8 @@ suppose you have a repo/entity/model user as following:
 ## get /api/repos/user
 if the client request the api without parameter, the api will return all users
 ## get  api/repos/user?s=3&c=2 
-- s how many records should skip
-- c how many records should return 
+- key 's' - how many records should skip
+- key 'c' - how many records should return 
 - so this example skips the first 3 records, takes 2 records: 
 ## get api/repos/user?firstName=a
 - the key firstName means field name
@@ -42,29 +43,16 @@ firstName = 'Joe'
 ## api/repos/user?id=2~4
 - find user id range from 2 to 4<br/>
 ```sql
-fristName between (2,4)
+firstName between (2,4)
 ```
 ## api/repos/user?id=2~
 - find user id >= 2 <br/>
-
 ## api/repos/user?id=~4
 - find user id <= 4
 
-# log
-the second parameter of setCRUDRouter is a callback function to log CRUD request
-## default log
-setCRUDRouter(ormConfig)
-
-## disable log
-setCRUDRouter(ormConfig,null)
-
-## customze log
-setCRUDRouter(ormConfig,(level,msg)=>{/* your own log code*/ })
-
-
-
 # installation
-## if you are starting a new project, you can clone https://github.com/jaikechen/typeorm-json-api/tree/master/src/app as an starter.
+## if you are starting a new project,
+ you can clone https://github.com/jaikechen/typeorm-json-api/tree/master/src/app as an starter.
 ## if you want add this lib to an exists project
 1. install the typeorm and express and this package
 ```
@@ -103,8 +91,55 @@ export class User {
 ### add router
 
 ``` typescript
+import {createCRUDRouter} from 'typeorm-json-api'
 const app = express()
 ...
-setCRUDRouter(ormConfig)
-app.use('/api/repos', repoRouter)
+app.use('/api/repos', createCRUDRouter(ormConfig))
+```
+
+# log
+the second parameter of createCRUDRouter is a callback function to log CRUD request
+## default log
+```typescript
+createCRUDRouter(ormConfig)
+or
+createCRUDRouter(ormConfig, undefined)
+```
+## disable log
+```typescript
+createCRUDRouter(ormConfig,null)
+```
+## customze log
+```typescript
+createCRUDRouter(ormConfig,(level,msg)=>{
+  /* your own log code*/ 
+  })
+```
+# authorization
+the third parameter of createCRUDRouter is the verifyToken handler,
+``` typescript
+app.use('/api/repos', createCRUDRouter(ormConfig, undefined,verifyToken))
+```
+the following is a very simple version of verify token handler
+``` typescript
+const secret = 'very secret'
+function getToken(req: Request, res: Response) {
+    const token = jwt.sign({ username: 'joe@a.com' }, secret, { expiresIn: '1800s' })
+    res.send(token)
+}
+function verifyToken(req, res, next) {
+    console.log('in verify token')
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    if (token == null) {
+        return res.sendStatus(401)
+    }
+    jwt.verify(token, secret, (err: any, user: any) => {
+        if (err) {
+            return res.sendStatus(403)
+        }
+        req.user = user
+        next() // pass the execution off to whatever request the client intended
+    })
+}
 ```
