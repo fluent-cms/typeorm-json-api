@@ -8,12 +8,12 @@ export enum LogLevel {
     trace = 2
 }
 
-let logger = (level:LogLevel, msg) => {
+let logger = (level:LogLevel, msg:any) => {
     console.log(`***** in repo CRUD router, level = ${level}` )
     console.log(msg)
 }
 
-const log =(level,msg) => logger && logger(level,msg)
+const log =(level:LogLevel,msg:any) => logger && logger(level,msg)
 
 let repoOrmConfig: ConnectionOptions
 

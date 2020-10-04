@@ -50,6 +50,18 @@ fristName between (2,4)
 ## api/repos/user?id=~4
 - find user id <= 4
 
+# log
+the second parameter of setCRUDRouter is a callback function to log CRUD request
+# default log
+setCRUDRouter(ormConfig)
+
+# disable log
+setCRUDRouter(ormConfig,null)
+
+# customze log
+setCRUDRouter(ormConfig,(level,msg)=>{/* your own log code*/ })
+
+
 
 # installation
 ## if you are starting a new project, you can clone https://github.com/jaikechen/typeorm-json-api/tree/master/src/app as an starter.
