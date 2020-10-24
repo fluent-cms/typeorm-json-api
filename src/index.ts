@@ -1,1 +1,1 @@
-export {createCRUDRouter,LogLevel} from './app/src/routers/crudRouter'
+export {createCRUDRouter,LogLevel,Authorize} from './app/src/core'

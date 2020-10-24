@@ -1,7 +1,5 @@
 # why this lib
-Leveraging Express and TypeOrm, this lib helps you add a generic CRUD(create, read, update, delete) router to you Node.js application.
-With several lines of code, you get CRUD json web api for all your type orm entities.<br/> You can also add  authorization handler to secure the CRUD router.
-
+## this is a generic web api router which can CRUD(create, read, update, delete) any TypeOrm entities
 ``` typescript
 - query records: get /api/repos/yourEntity 
 - query by id: get /api/repos/yourEntity/:id
@@ -10,13 +8,28 @@ With several lines of code, you get CRUD json web api for all your type orm enti
 - delete a records: /api/repos/yourEntity/:id
 ```
 
-with query parameters, the get api supports
+## with query parameters, the get/read api supports
 - pagination
 - filter on each field 
 - order on each field
 
+## support role based authorization, if you want some entity only accessed by  admin role, simply add
+``` typescript
+@Entity()
+@Authorize({role:'admin'}
+export class User {
+    @PrimaryGeneratedColumn()
+    id: number
+}
+```
+## you can also add authorization to specific operations, for example you want common use only be able to delete his how post, 
+```typescript
+@Authorize({role:'common', operation:'delete', columns:['userId']})
+``` 
+
+
 # query parameters usage
-suppose you have a repo/entity/model user as following:
+suppose you have a entity user as following:
 ```typescript
 {id:number, firstName:number, lastName:number}
 ```

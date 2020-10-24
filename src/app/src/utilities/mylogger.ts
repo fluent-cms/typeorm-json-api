@@ -1,4 +1,4 @@
-import { LogLevel } from "routers/crudRouter"
+import { LogLevel } from "core/routers/crudRouter"
 
 export function crudLog (level:LogLevel, msg:any){
     console.log(level + '----' + new Error().stack.split('\n')[3])

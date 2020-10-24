@@ -1,11 +1,25 @@
-import {Entity, Column, PrimaryGeneratedColumn} from "typeorm";
-
+import { Authorize  } from "typeorm-json-api";
+import {Entity, Column, PrimaryGeneratedColumn,ManyToOne} from "typeorm";
+import { Group } from "./group";
 @Entity()
+@Authorize({role:'admin'})
+@Authorize({role:'common', operation:'read', columns:'groupId'})
+@Authorize({role:'common', operation:'update', columns:'userId'})
 export class User {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number
     @Column()
-    firstName: string;
+    userName: string
     @Column()
-    lastName: string;
+    password: string
+    @Column()
+    firstName: string
+    @Column()
+    lastName: string
+    @Column()
+    role:'admin'|'common'
+    @Column({nullable:true})
+    groupId:number
+    @ManyToOne(()=>Group)
+    group:Group
 }

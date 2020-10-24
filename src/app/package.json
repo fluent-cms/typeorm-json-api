@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node -r ts-node/register ./src/main.ts",
     "start:debug": "node --inspect=5858 -r ts-node/register ./src/main.ts",
-    "start:watch": "nodemon",
+    "start:dev": "nodemon",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,7 +30,7 @@
     "sqlite": "^4.0.14",
     "sqlite3": "^5.0.0",
     "typeorm": "^0.2.26",
-    "typeorm-json-api": "latest"
+    "typeorm-json-api": "^0.0.7"
   },
   "nodemonConfig": {
     "ignore": [

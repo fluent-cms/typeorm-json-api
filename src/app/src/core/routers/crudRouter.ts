@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import express from "express";
-import { Connection, ConnectionOptions, createConnection } from "typeorm";
+import { Connection, ConnectionOptions, createConnection, getConnectionManager } from "typeorm";
 import { mountHandler } from "../utilities/crudHandler";
 
 export type LogLevel = 'error' | 'trace'
+
+
 export function createCRUDRouter(ormConfig: any, routerLogger = logger, routerAuthHandler = authHandler) {
     repoOrmConfig = ormConfig
     logger = routerLogger
@@ -11,10 +13,10 @@ export function createCRUDRouter(ormConfig: any, routerLogger = logger, routerAu
 
     const crudRouter = express.Router()
     crudRouter.use(express.json())
-    if (authHandler){
+    if (authHandler) {
         crudRouter.use(authHandler)
-    } 
-    mountHandler(crudRouter,getRepo,log)
+    }
+    mountHandler(crudRouter, getRepo, log)
     return crudRouter
 }
 
@@ -22,8 +24,12 @@ let authHandler = (req: Request, res: Response, next) => next()
 let repoOrmConfig: ConnectionOptions
 let repoConn: Connection
 
+
+
+
 async function getConnection() {
     try {
+        repoConn = repoConn ?? getConnectionManager().get(repoOrmConfig.name ?? 'default')
         repoConn = repoConn ?? await createConnection(repoOrmConfig)
         return repoConn
     } catch (error) {
@@ -31,11 +37,11 @@ async function getConnection() {
         throw error
     }
 }
-async function getRepo(req: Request) {
+async function getRepo(repoName:string) {
     try {
+        console.log('-----------in get repo, repoName=' + repoName)
         const conn = await getConnection()
-        const repoName = req.params.repo
-        const repo = await conn.getRepository(repoName)
+        const repo = conn.getRepository(repoName)
         return repo
     } catch (error) {
         log('error', error)
